@@ -19,8 +19,8 @@ df=pd.read_csv(r"C:\Users\hp\Desktop\Mohit Sahdev - Data Scientist\bank-marketin
 #print(df.isnull().sum()) #check missing values
 #print(df.dtypes) #check datatypes
 #print(df.duplicated().sum()) # check duplicate row
-# print(df.nunique()) #check unique values
-
+# print(df.nunique()) #check unique values - gives number(numberic)
+#print(df["job"].unique()) #gives actual values in it
 
 
 # ============================================================
@@ -93,3 +93,47 @@ print(pd.crosstab(df["job"], df["y"]))
 #for col in df.columns:
     print("\nCOLUMN:", col)
     print(df[col].unique())
+
+#=============================================================
+#Deep Dive
+#=============================================================
+# Basic
+print(df["age"].describe())
+
+# Range
+print(df["age"].min())
+print(df["age"].max())
+
+# Different ages
+print(df["age"].nunique())
+
+# Most common ages
+print(df["age"].value_counts().head(10))
+
+# Average age
+print(df["age"].mean())
+
+# Median age
+print(df["age"].median())
+
+# Age vs target
+print(df.groupby("y")["age"].mean())
+
+# Age range by target
+print(df.groupby("y")["age"].agg(["min", "mean", "median", "max"]))
+
+df["age_group"] = pd.cut(
+    df["age"],
+    bins=[0, 20, 30, 40, 50, 60, 100]
+)
+
+print(df["age_group"].value_counts().sort_index())
+
+#then
+print(
+    pd.crosstab(
+        df["age_group"],
+        df["y"],
+        normalize="index"
+    ) * 100
+)
