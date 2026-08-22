@@ -137,3 +137,38 @@ print(
         normalize="index"
     ) * 100
 )
+
+# ============================================================
+# EDUCATION DEEP DIVE
+# ============================================================
+
+# Check all unique education categories
+print(df["education"].unique())
+
+# Count how many unique education categories are present
+print(df["education"].nunique())
+
+# Count the number of customers in each education category
+print(df["education"].value_counts())
+
+# Check the percentage distribution of education categories
+print(df["education"].value_counts(normalize=True) * 100)
+
+# Compare education level with the target variable
+# This shows how many customers said yes/no in each education category
+print(
+    pd.crosstab(
+        df["education"],
+        df["y"]
+    )
+)
+
+# Calculate the percentage of yes/no within each education category
+# normalize="index" means percentage is calculated row-wise
+print(
+    pd.crosstab(
+        df["education"],
+        df["y"],
+        normalize="index"
+    ) * 100
+)
