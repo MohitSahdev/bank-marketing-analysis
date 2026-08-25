@@ -6,7 +6,7 @@ df=pd.read_csv(r"C:\Users\hp\Desktop\Mohit Sahdev - Data Scientist\bank-marketin
 # ============================================================
 #print(df.head()) #data header
 #print(df.shape) #how many rows and columns
-#print(df.columns) #name of columns
+print(df.columns) #name of columns
 #print(df.info) #data type and missing values
 #print(df.describe) #numberical data in statistics
 #print(df.tail())
@@ -77,7 +77,7 @@ df=pd.read_csv(r"C:\Users\hp\Desktop\Mohit Sahdev - Data Scientist\bank-marketin
 
 print(pd.crosstab(df["job"], df["y"]))
 
-#print(
+print(
     pd.crosstab(
         df["job"],
         df["y"],
@@ -90,7 +90,7 @@ print(pd.crosstab(df["job"], df["y"]))
 # CHECK ALL COLUMNS
 # ============================================================
 
-#for col in df.columns:
+for col in df.columns:
     print("\nCOLUMN:", col)
     print(df[col].unique())
 
@@ -172,3 +172,11 @@ print(
         normalize="index"
     ) * 100
 )
+
+#===============================
+#Has loan feature
+#===============================
+df['has_existing_loan'] = (df['loan'] == 'yes').astype(int)
+df['y'].value_counts()
+df['y_numeric'] = (df['y'] == 'yes').astype(int)
+df.groupby('has_existing_loan')['y_numeric'].mean()
