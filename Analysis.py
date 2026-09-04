@@ -1,182 +1,76 @@
 import pandas as pd
 df=pd.read_csv(r"C:\Users\hp\Desktop\Mohit Sahdev - Data Scientist\bank-marketing-analysis\Data\bank-direct-marketing-campaigns.csv")
 
-# ============================================================
-# BASIC UNDERSTANDING
-# ============================================================
-#print(df.head()) #data header
-#print(df.shape) #how many rows and columns
-print(df.columns) #name of columns
-#print(df.info) #data type and missing values
-#print(df.describe) #numberical data in statistics
-#print(df.tail())
-#print(df.sample(5))
+def dataset_overview(df, target=None):
+
+    print("=" * 60)
+    print("DATASET OVERVIEW")
+    print("=" * 60)
+
+    # 1. Dataset size
+    rows, columns = df.shape
+    print(f"\nRows       : {rows:,}")
+    print(f"Columns    : {columns}")
+
+    # 2. Column names
+    print("\nCOLUMN NAMES")
+    print("-" * 60)
+    print(df.columns.tolist())
+
+    # 3. Data types
+    print("\nDATA TYPES")
+    print("-" * 60)
+    print(df.dtypes)
+
+    # 4. Numerical columns
+    numerical_cols = df.select_dtypes(
+        include="number"
+    ).columns.tolist()
+
+    print("\nNUMERICAL COLUMNS")
+    print("-" * 60)
+    print(numerical_cols)
+
+    # 5. Categorical columns
+    categorical_cols = df.select_dtypes(
+        include=["object", "category"]
+    ).columns.tolist()
+
+    print("\nCATEGORICAL COLUMNS")
+    print("-" * 60)
+    print(categorical_cols)
+
+    # 6. Missing / non-null overview
+    print("\nDATA COMPLETENESS")
+    print("-" * 60)
+    print(df.info())
+
+    # 7. Unique values
+    print("\nUNIQUE VALUES")
+    print("-" * 60)
+    print(df.nunique().sort_values())
+
+    # 8. Categorical value overview
+    print("\nCATEGORICAL VALUE COUNTS")
+    print("-" * 60)
+
+    for col in categorical_cols:
+        print(f"\n{col}:")
+        print(df[col].value_counts())
+
+    # 9. Target overview
+    if target:
+        print("\nTARGET VARIABLE")
+        print("-" * 60)
+        print(f"Target: {target}")
+        print(df[target].value_counts())
+        print("\nTarget percentage:")
+        print(
+            df[target]
+            .value_counts(normalize=True)
+            .mul(100)
+            .round(2)
+        )
 
 
-# ============================================================
-# DATA QUALITY
-# ============================================================
-#print(df.isnull().sum()) #check missing values
-#print(df.dtypes) #check datatypes
-#print(df.duplicated().sum()) # check duplicate row
-# print(df.nunique()) #check unique values - gives number(numberic)
-#print(df["job"].unique()) #gives actual values in it
-
-
-# ============================================================
-# UNIQUE VALUES & VALUE COUNTS
-# ============================================================
-
-# print(df["job"].unique())
-# print(df["job"].value_counts())
-
-# print(df["age"].unique())
-# print(df["age"].value_counts())
-
-# print(df["marital"].unique())
-# print(df["marital"].value_counts())
-
-# print(df["education"].unique())
-# print(df["education"].value_counts())
-
-# print(df["default"].unique())
-# print(df["default"].value_counts())
-
-# print(df["housing"].unique())
-# print(df["housing"].value_counts())
-
-# print(df["loan"].unique())
-# print(df["loan"].value_counts())
-
-# print(df["contact"].unique())
-# print(df["contact"].value_counts())
-
-# print(df["month"].unique())
-# print(df["month"].value_counts())
-
-# print(df["poutcome"].unique())
-# print(df["poutcome"].value_counts())
-
-# print(df["y"].unique())
-# print(df["y"].value_counts())
-
-#======FOR PERCENTAGE======
-# df["y"].value_counts(normalize=True) * 100
-
-# ============================================================
-# NUMERICAL RANGE CHECK
-# ============================================================
-
-# print(df["age"].min())
-# print(df["age"].max())
-
-
-# ============================================================
-# COMPARE COLUMNS
-# ============================================================
-
-print(pd.crosstab(df["job"], df["y"]))
-
-print(
-    pd.crosstab(
-        df["job"],
-        df["y"],
-        normalize="index"
-    ) * 100
-)
-
-
-# ============================================================
-# CHECK ALL COLUMNS
-# ============================================================
-
-for col in df.columns:
-    print("\nCOLUMN:", col)
-    print(df[col].unique())
-
-#=============================================================
-#Deep Dive
-#=============================================================
-# Basic
-print(df["age"].describe())
-
-# Range
-print(df["age"].min())
-print(df["age"].max())
-
-# Different ages
-print(df["age"].nunique())
-
-# Most common ages
-print(df["age"].value_counts().head(10))
-
-# Average age
-print(df["age"].mean())
-
-# Median age
-print(df["age"].median())
-
-# Age vs target
-print(df.groupby("y")["age"].mean())
-
-# Age range by target
-print(df.groupby("y")["age"].agg(["min", "mean", "median", "max"]))
-
-df["age_group"] = pd.cut(
-    df["age"],
-    bins=[0, 20, 30, 40, 50, 60, 100]
-)
-
-print(df["age_group"].value_counts().sort_index())
-
-#then
-print(
-    pd.crosstab(
-        df["age_group"],
-        df["y"],
-        normalize="index"
-    ) * 100
-)
-
-# ============================================================
-# EDUCATION DEEP DIVE
-# ============================================================
-
-# Check all unique education categories
-print(df["education"].unique())
-
-# Count how many unique education categories are present
-print(df["education"].nunique())
-
-# Count the number of customers in each education category
-print(df["education"].value_counts())
-
-# Check the percentage distribution of education categories
-print(df["education"].value_counts(normalize=True) * 100)
-
-# Compare education level with the target variable
-# This shows how many customers said yes/no in each education category
-print(
-    pd.crosstab(
-        df["education"],
-        df["y"]
-    )
-)
-
-# Calculate the percentage of yes/no within each education category
-# normalize="index" means percentage is calculated row-wise
-print(
-    pd.crosstab(
-        df["education"],
-        df["y"],
-        normalize="index"
-    ) * 100
-)
-
-#===============================
-#Has loan feature
-#===============================
-df['has_existing_loan'] = (df['loan'] == 'yes').astype(int)
-df['y'].value_counts()
-df['y_numeric'] = (df['y'] == 'yes').astype(int)
-df.groupby('has_existing_loan')['y_numeric'].mean()
+dataset_overview(df, target="y")
