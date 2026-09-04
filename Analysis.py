@@ -74,3 +74,43 @@ def dataset_overview(df, target=None):
 
 
 dataset_overview(df, target="y")
+
+
+def data_quality_check(df):
+
+    print("=" * 60)
+    print("DATA QUALITY CHECK")
+    print("=" * 60)
+
+    # Missing values
+    print("\nMISSING VALUES")
+    print("-" * 60)
+    print(df.isnull().sum())
+
+    # Duplicate rows
+    print("\nDUPLICATE ROWS")
+    print("-" * 60)
+    print(df.duplicated().sum())
+
+    # Unique values
+    print("\nUNIQUE VALUES")
+    print("-" * 60)
+    print(df.nunique())
+
+    # Numerical summary
+    print("\nNUMERICAL SUMMARY")
+    print("-" * 60)
+    print(df.describe().T)
+
+    # Categorical values
+    print("\nCATEGORICAL VALUES")
+    print("-" * 60)
+
+    categorical_cols = df.select_dtypes(include="str").columns
+
+    for col in categorical_cols:
+        print(f"\n{col}:")
+        print(df[col].unique())
+
+
+data_quality_check(df)
