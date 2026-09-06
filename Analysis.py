@@ -114,3 +114,10 @@ def data_quality_check(df):
 
 
 data_quality_check(df)
+
+
+# checking finding from above code - there are pdays showing 999 days that mean previously the bank staff has contected 999 days ago. now we will go deep into it to know
+
+print(df["pdays"].value_counts().sort_index())
+pday_percentage=df["pdays"].value_counts(normalize=True).loc[999]*100
+print(pday_percentage)
