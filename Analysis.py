@@ -121,3 +121,10 @@ data_quality_check(df)
 print(df["pdays"].value_counts().sort_index())
 pday_percentage=df["pdays"].value_counts(normalize=True).loc[999]*100
 print(pday_percentage)
+
+#Finding more details about pday=999
+new_customers = df[df["pdays"] == 999]
+new_customers.shape
+print(new_customers["y"].value_counts(normalize=True)*100)
+print(pd.crosstab(df["pdays"] == 999, df["poutcome"]))
+
