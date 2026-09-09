@@ -140,3 +140,22 @@ print(numerical_cols)
 # Import libraries for visualization
 import matplotlib.pyplot as plt
 import seaborn as sns
+
+
+# Plot distribution of each numerical column
+for col in numerical_cols:
+    plt.figure(figsize=(8,4))
+
+    #create histogram
+    sns.histplot(data=df, x=col, bins=30)
+
+#add title and labels
+plt.title(f"Distribution of {col}")
+plt.xlabel(col)
+plt.ylabel("Frequency")
+
+#adjust layout
+plt.tight_layout()
+
+#display the graph
+plt.show()
