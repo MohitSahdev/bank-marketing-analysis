@@ -106,7 +106,7 @@ def data_quality_check(df):
     print("\nCATEGORICAL VALUES")
     print("-" * 60)
 
-    categorical_cols = df.select_dtypes(include="str").columns
+    categorical_cols = df.select_dtypes(include="object").columns
 
     for col in categorical_cols:
         print(f"\n{col}:")
@@ -128,3 +128,15 @@ new_customers.shape
 print(new_customers["y"].value_counts(normalize=True)*100)
 print(pd.crosstab(df["pdays"] == 999, df["poutcome"]))
 
+#EDA PROCESS
+print("=" * 60)
+print("NUMERICAL DISTRIBUTIONS")
+print("=" * 60)
+
+# Numerical columns that we want to analyse
+numerical_cols= ["age" , "campaign" , "pdays", "previous", "emp.var.rate", "cons.price.idx", "cons.conf.idx", "euribor3m", "nr.employed"]
+print(numerical_cols)
+
+# Import libraries for visualization
+import matplotlib.pyplot as plt
+import seaborn as sns
