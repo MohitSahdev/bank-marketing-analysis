@@ -128,7 +128,12 @@ new_customers.shape
 print(new_customers["y"].value_counts(normalize=True)*100)
 print(pd.crosstab(df["pdays"] == 999, df["poutcome"]))
 
-#EDA PROCESS
+#EDA PROCESS 
+#1 numberical distribution (histogram , KDE , distribution shape, Skewness/unusal values)
+#2 outlier analysis (Boxplot , IQR , outlier count , outlier percentage , decide whether outlier are legimate or data error)
+#3 correlation with target (convert y:no=0 , Yes = 1, pearson correlation , correlation bar chart)
+#4 feature vs target analysis ( boxplot by y , compare distributions of yes/no customers)
+ 
 print("=" * 60)
 print("NUMERICAL DISTRIBUTIONS")
 print("=" * 60)
@@ -146,8 +151,8 @@ import seaborn as sns
 for col in numerical_cols:
     plt.figure(figsize=(8,4))
 
-    #create histogram
-    sns.histplot(data=df, x=col, bins=30)
+    #create histogram (KDE added for smooth curve)
+    sns.histplot(data=df, x=col, bins=30, kde=True)
 
 #add title and labels
 plt.title(f"Distribution of {col}")
