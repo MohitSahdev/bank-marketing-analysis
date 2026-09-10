@@ -164,3 +164,8 @@ plt.tight_layout()
 
 #display the graph
 plt.show()
+
+#numeric skewness
+skewness = df[numerical_cols].skew()
+
+print(skewness.sort_values())
