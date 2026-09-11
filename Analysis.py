@@ -169,3 +169,12 @@ plt.show()
 skewness = df[numerical_cols].skew()
 
 print(skewness.sort_values())
+
+print("=" * 60)
+print("UNUSUAL VALUE CHECK")
+print("=" * 60)
+
+for col in numerical_cols:
+    print(f"\n{col}")
+    print(f"Minimum : {df[col].min()}")
+    print(f"Maximum : {df[col].max()}")
