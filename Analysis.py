@@ -178,3 +178,23 @@ for col in numerical_cols:
     print(f"\n{col}")
     print(f"Minimum : {df[col].min()}")
     print(f"Maximum : {df[col].max()}")
+
+
+print("=" * 60)
+print("BOXPLOT - OUTLIER VISUALIZATION")
+print("=" * 60)
+
+for col in numerical_cols:
+
+    plt.figure(figsize=(8, 4))
+
+    sns.boxplot(
+        data=df,
+        x=col
+    )
+
+    plt.title(f"Boxplot of {col}")
+    plt.xlabel(col)
+
+    plt.tight_layout()
+    plt.show()
