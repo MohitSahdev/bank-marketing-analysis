@@ -244,3 +244,62 @@ for col in numerical_cols:
 outlier_df = pd.DataFrame(outlier_summary)
 
 print(outlier_df.round(2))
+
+
+print("=" * 60)
+print("OUTLIER SUMMARY")
+print("=" * 60)
+
+print(
+    outlier_df
+    .sort_values("Outlier %", ascending=False)
+    .round(2)
+)
+
+
+print("=" * 60)
+print("CORRELATION WITH TARGET")
+print("=" * 60)
+
+# Convert target variable into numerical format
+df["y_encoded"] = df["y"].map({
+    "no": 0,
+    "yes": 1
+})
+
+print("\nTarget Encoding:")
+print(df["y_encoded"].value_counts())
+
+
+print("=" * 60)
+print("PEARSON CORRELATION WITH TARGET")
+print("=" * 60)
+
+correlation = (
+    df[numerical_cols + ["y_encoded"]]
+    .corr()["y_encoded"]
+    .drop("y_encoded")
+    .sort_values(ascending=False)
+)
+
+print("\nCorrelation with Target:")
+print(correlation.round(3))
+
+
+print("=" * 60)
+print("CORRELATION BAR CHART")
+print("=" * 60)
+
+plt.figure(figsize=(10, 6))
+
+sns.barplot(
+    x=correlation.values,
+    y=correlation.index
+)
+
+plt.title("Numerical Features Correlation with Target")
+plt.xlabel("Pearson Correlation")
+plt.ylabel("Feature")
+
+plt.tight_layout()
+plt.show()
