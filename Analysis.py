@@ -154,16 +154,16 @@ for col in numerical_cols:
     #create histogram (KDE added for smooth curve)
     sns.histplot(data=df, x=col, bins=30, kde=True)
 
-#add title and labels
-plt.title(f"Distribution of {col}")
-plt.xlabel(col)
-plt.ylabel("Frequency")
+    #add title and labels
+    plt.title(f"Distribution of {col}")
+    plt.xlabel(col)
+    plt.ylabel("Frequency")
 
-#adjust layout
-plt.tight_layout()
+    #adjust layout
+    plt.tight_layout()
 
-#display the graph
-plt.show()
+    #display the graph
+    plt.show()
 
 #numeric skewness
 skewness = df[numerical_cols].skew()
@@ -198,3 +198,49 @@ for col in numerical_cols:
 
     plt.tight_layout()
     plt.show()
+
+
+print("=" * 60)
+print("IQR OUTLIER ANALYSIS")
+print("=" * 60)
+
+outlier_summary = []
+
+for col in numerical_cols:
+
+    # Calculate Q1 and Q3
+    Q1 = df[col].quantile(0.25)
+    Q3 = df[col].quantile(0.75)
+
+    # Calculate IQR
+    IQR = Q3 - Q1
+
+    # Calculate boundaries
+    lower_bound = Q1 - 1.5 * IQR
+    upper_bound = Q3 + 1.5 * IQR
+
+    # Find outliers
+    outliers = df[
+        (df[col] < lower_bound) |
+        (df[col] > upper_bound)
+    ]
+
+    # Count and percentage
+    outlier_count = len(outliers)
+    outlier_percentage = (outlier_count / len(df)) * 100
+
+    outlier_summary.append({
+        "Feature": col,
+        "Q1": Q1,
+        "Q3": Q3,
+        "IQR": IQR,
+        "Lower Bound": lower_bound,
+        "Upper Bound": upper_bound,
+        "Outlier Count": outlier_count,
+        "Outlier %": outlier_percentage
+    })
+
+
+outlier_df = pd.DataFrame(outlier_summary)
+
+print(outlier_df.round(2))
