@@ -316,3 +316,26 @@ dataset_overview(df, target="y")
 # and prepares them for categorical encoding in the next step.
 # Target variable "y" is already handled separately as the target.
 # ------------------------------------------------------------
+
+
+
+# ------------------------------------------------------------
+# CATEGORICAL ENCODING
+# ------------------------------------------------------------
+# Convert categorical columns into numerical columns
+# using One-Hot Encoding.
+# ------------------------------------------------------------
+
+categorical_cols = df.select_dtypes(include="object").columns.tolist()
+
+# Remove target column
+categorical_cols.remove("y")
+
+df_encoded = pd.get_dummies(
+    df,
+    columns=categorical_cols,
+    drop_first=True
+)
+
+print("Categorical encoding completed.")
+print("New dataset shape:", df_encoded.shape)
