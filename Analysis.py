@@ -303,3 +303,16 @@ plt.ylabel("Feature")
 
 plt.tight_layout()
 plt.show()
+
+dataset_overview(df, target="y")
+
+
+# ------------------------------------------------------------
+# FEATURE ENGINEERING - CATEGORICAL FEATURE IDENTIFICATION
+# ------------------------------------------------------------
+# Process:
+# Identify categorical columns based on their data type.
+# This step checks which features contain categorical values
+# and prepares them for categorical encoding in the next step.
+# Target variable "y" is already handled separately as the target.
+# ------------------------------------------------------------
