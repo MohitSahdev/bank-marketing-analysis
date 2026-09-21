@@ -361,3 +361,14 @@ for col in numerical_cols:
 
     plt.tight_layout()
     plt.show()
+
+#Future engineering
+categorical_cols = df.select_dtypes(include="object").columns.tolist()
+
+categorical_cols.remove("y")
+
+df_encoded = pd.get_dummies(
+    df,
+    columns=categorical_cols,
+    drop_first=True
+)
