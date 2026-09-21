@@ -339,3 +339,25 @@ df_encoded = pd.get_dummies(
 
 print("Categorical encoding completed.")
 print("New dataset shape:", df_encoded.shape)
+
+
+print("=" * 60)
+print("NUMERICAL FEATURES VS TARGET")
+print("=" * 60)
+
+for col in numerical_cols:
+
+    plt.figure(figsize=(8, 4))
+
+    sns.boxplot(
+        data=df,
+        x="y",
+        y=col
+    )
+
+    plt.title(f"{col} vs Target")
+    plt.xlabel("Target")
+    plt.ylabel(col)
+
+    plt.tight_layout()
+    plt.show()
